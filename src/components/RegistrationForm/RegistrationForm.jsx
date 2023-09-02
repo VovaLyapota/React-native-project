@@ -1,133 +1,72 @@
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+  formContainer,
+  formInput,
+  hoveredFormInput,
+  navButton,
+  navButtonText,
+  passwordButton,
+  passwordButtonText,
+  passwordContainer,
+  submitFormButton,
+  submitFormButtonText,
+} from "../LogInForm/FormStyles";
+import { useState } from "react";
 
 export const RegistrationForm = () => {
-  return (
-    // Registration form
-    <View
-      style={{
-        paddingLeft: 16,
-        paddingRight: 16,
-        gap: 16,
+  const [focusedInput, setFocusedInput] = useState(null);
 
-        width: "100%",
-      }}
-    >
+  return (
+    <View style={formContainer}>
       <TextInput
-        style={style.input}
+        style={[formInput, focusedInput === "login" && hoveredFormInput]}
+        onFocus={() => setFocusedInput("login")}
+        onBlur={() => setFocusedInput(null)}
         //   onChangeText={onChangeLogin}
-        //   value={number}
+        //   value={login}
         placeholder="Логін"
       />
 
       <TextInput
-        style={style.input}
+        style={[formInput, focusedInput === "email" && hoveredFormInput]}
+        onFocus={() => setFocusedInput("email")}
+        onBlur={() => setFocusedInput(null)}
         //   onChangeText={onChangeEmail}
-        //   value={number}
+        //   value={email}
         placeholder="Адреса електронної пошти"
       />
 
-      {/* Password input with show/hide button */}
-      <View style={{ position: "relative", marginBottom: 43 }}>
+      <View style={passwordContainer}>
         <TextInput
-          style={style.input}
+          style={[formInput, focusedInput === "password" && hoveredFormInput]}
+          onFocus={() => setFocusedInput("password")}
+          onBlur={() => setFocusedInput(null)}
           //   onChangeText={onChangePassword}
-          //   value={number}
+          //   value={password}
           placeholder="Пароль"
         />
 
         <TouchableOpacity
-          //   onPress={addUserImg}
-          style={{ position: "absolute", top: 15.35, right: 25 }}
+          //   onPress={showPassword}
+          style={passwordButton}
         >
-          <Text
-            style={{
-              color: "#1B4371",
-              fontFamily: "Roboto",
-              fontSize: 16,
-            }}
-          >
-            Показати
-          </Text>
+          <Text style={passwordButtonText}>Показати</Text>
         </TouchableOpacity>
       </View>
-      {/* END Password input with show/hide button */}
 
-      {/* Submit button */}
       <TouchableOpacity
         //   onPress={handleSubmit}
-        style={{
-          alignItems: "center",
-          marginLeft: "auto",
-          marginRight: "auto",
-          paddingTop: 16,
-          paddingBottom: 16,
-
-          width: "92%",
-          // height: 50,
-          borderRadius: 100,
-          backgroundColor: "#FF6C00",
-        }}
+        style={submitFormButton}
       >
-        <Text
-          style={{
-            color: "#FFFFFF",
-            fontFamily: "Roboto",
-            fontSize: 16,
-          }}
-        >
-          Зареєструватись
-        </Text>
+        <Text style={submitFormButtonText}>Зареєструватись</Text>
       </TouchableOpacity>
-      {/* END Submit button */}
 
-      {/* Log in link */}
       <TouchableOpacity
         //   onPress={navigateToLogInForm}
-        style={{
-          alignItems: "center",
-          marginLeft: "auto",
-          marginRight: "auto",
-
-          width: "92%",
-        }}
+        style={navButton}
       >
-        <Text
-          style={{
-            color: "#1B4371",
-            fontFamily: "Roboto",
-            fontSize: 16,
-          }}
-        >
-          Вже є акаунт? Увійти
-        </Text>
+        <Text style={navButtonText}>Вже є акаунт? Увійти</Text>
       </TouchableOpacity>
-      {/* END Log in link */}
     </View>
-    // END Registration form
   );
 };
-
-const style = StyleSheet.create({
-  input: {
-    marginLeft: "auto",
-    marginRight: "auto",
-    padding: 16,
-
-    width: "92%",
-    height: 50,
-
-    fontFamily: "Roboto",
-    fontSize: 16,
-
-    backgroundColor: "#F6F6F6",
-    borderWidth: 1,
-    borderColor: "#E8E8E8",
-    borderRadius: 8,
-  },
-});

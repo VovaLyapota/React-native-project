@@ -1,32 +1,37 @@
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+  formContainer,
+  formInput,
+  hoveredFormInput,
+  navButton,
+  navButtonText,
+  passwordButton,
+  passwordButtonText,
+  passwordContainer,
+  submitFormButton,
+  submitFormButtonText,
+} from "./FormStyles";
+import { useState } from "react";
 
 export const LogInForm = () => {
-  return (
-    <View
-      style={{
-        paddingLeft: 16,
-        paddingRight: 16,
-        gap: 16,
+  const [focusedInput, setFocusedInput] = useState(null);
 
-        width: "100%",
-      }}
-    >
+  return (
+    <View style={formContainer}>
       <TextInput
-        style={style.input}
+        style={[formInput, focusedInput === "email" && hoveredFormInput]}
+        onFocus={() => setFocusedInput("email")}
+        onBlur={() => setFocusedInput(null)}
         // onChangeText={onChangeEmail}
         // value={number}
         placeholder="Адреса електронної пошти"
       />
 
-      <View style={{ position: "relative", marginBottom: 43 }}>
+      <View style={passwordContainer}>
         <TextInput
-          style={style.input}
+          style={[formInput, focusedInput === "password" && hoveredFormInput]}
+          onFocus={() => setFocusedInput("password")}
+          onBlur={() => setFocusedInput(null)}
           //   onChangeText={onChangePassword}
           //   value={number}
           placeholder="Пароль"
@@ -34,83 +39,24 @@ export const LogInForm = () => {
 
         <TouchableOpacity
           //   onPress={addUserImg}
-          style={{ position: "absolute", top: 15.35, right: 25 }}
+          style={passwordButton}
         >
-          <Text
-            style={{
-              color: "#1B4371",
-              fontFamily: "Roboto",
-              fontSize: 16,
-            }}
-          >
-            Показати
-          </Text>
+          <Text style={passwordButtonText}>Показати</Text>
         </TouchableOpacity>
       </View>
 
       <TouchableOpacity
         //   onPress={handleSubmit}
-        style={{
-          alignItems: "center",
-          marginLeft: "auto",
-          marginRight: "auto",
-          paddingTop: 16,
-          paddingBottom: 16,
-
-          width: "92%",
-          borderRadius: 100,
-          backgroundColor: "#FF6C00",
-        }}
+        style={submitFormButton}
       >
-        <Text
-          style={{
-            color: "#FFFFFF",
-            fontFamily: "Roboto",
-            fontSize: 16,
-          }}
-        >
-          Увійти
-        </Text>
+        <Text style={submitFormButtonText}>Увійти</Text>
       </TouchableOpacity>
       <TouchableOpacity
         //   onPress={navigateToLogInForm}
-        style={{
-          alignItems: "center",
-          marginLeft: "auto",
-          marginRight: "auto",
-
-          width: "92%",
-        }}
+        style={navButton}
       >
-        <Text
-          style={{
-            color: "#1B4371",
-            fontFamily: "Roboto",
-            fontSize: 16,
-          }}
-        >
-          Немає акаунту? Зареєструватися
-        </Text>
+        <Text style={navButtonText}>Немає акаунту? Зареєструватися</Text>
       </TouchableOpacity>
     </View>
   );
 };
-
-const style = StyleSheet.create({
-  input: {
-    marginLeft: "auto",
-    marginRight: "auto",
-    padding: 16,
-
-    width: "92%",
-    height: 50,
-
-    fontFamily: "Roboto",
-    fontSize: 16,
-
-    backgroundColor: "#F6F6F6",
-    borderWidth: 1,
-    borderColor: "#E8E8E8",
-    borderRadius: 8,
-  },
-});

@@ -1,19 +1,6 @@
 import { Text } from "react-native";
+import { formHeaderStyles } from "./FormHeaderStyles";
 
 export const FormHeader = ({ children }) => {
-  return (
-    <Text
-      style={{
-        marginBottom: 33,
-        textAlign: "center",
-
-        color: "#212121",
-        fontFamily: "RobotoMedium",
-        fontSize: 30,
-        letterSpacing: 0.3,
-      }}
-    >
-      {children}
-    </Text>
-  );
+  return <Text style={formHeaderStyles}>{children}</Text>;
 };
