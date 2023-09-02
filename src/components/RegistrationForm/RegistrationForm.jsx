@@ -14,7 +14,21 @@ import {
 import { useState } from "react";
 
 export const RegistrationForm = () => {
+  const [login, setLogin] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [focusedInput, setFocusedInput] = useState(null);
+  const [shouldHidePassword, setShouldHidePassword] = useState(true);
+
+  const handleSubmit = () => {
+    console.log("Login: ", login);
+    console.log("Email: ", email);
+    console.log("Password: ", password);
+
+    setLogin("");
+    setEmail("");
+    setPassword("");
+  };
 
   return (
     <View style={formContainer}>
@@ -22,8 +36,8 @@ export const RegistrationForm = () => {
         style={[formInput, focusedInput === "login" && hoveredFormInput]}
         onFocus={() => setFocusedInput("login")}
         onBlur={() => setFocusedInput(null)}
-        //   onChangeText={onChangeLogin}
-        //   value={login}
+        onChangeText={setLogin}
+        value={login}
         placeholder="Логін"
       />
 
@@ -31,8 +45,9 @@ export const RegistrationForm = () => {
         style={[formInput, focusedInput === "email" && hoveredFormInput]}
         onFocus={() => setFocusedInput("email")}
         onBlur={() => setFocusedInput(null)}
-        //   onChangeText={onChangeEmail}
-        //   value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        value={email}
         placeholder="Адреса електронної пошти"
       />
 
@@ -41,23 +56,23 @@ export const RegistrationForm = () => {
           style={[formInput, focusedInput === "password" && hoveredFormInput]}
           onFocus={() => setFocusedInput("password")}
           onBlur={() => setFocusedInput(null)}
-          //   onChangeText={onChangePassword}
-          //   value={password}
+          onChangeText={setPassword}
+          secureTextEntry={shouldHidePassword}
+          value={password}
           placeholder="Пароль"
         />
 
         <TouchableOpacity
-          //   onPress={showPassword}
           style={passwordButton}
+          onPress={() => setShouldHidePassword((prewState) => !prewState)}
         >
-          <Text style={passwordButtonText}>Показати</Text>
+          <Text style={passwordButtonText}>
+            {shouldHidePassword ? "Показати" : "Приховати"}
+          </Text>
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity
-        //   onPress={handleSubmit}
-        style={submitFormButton}
-      >
+      <TouchableOpacity onPress={handleSubmit} style={submitFormButton}>
         <Text style={submitFormButtonText}>Зареєструватись</Text>
       </TouchableOpacity>
 

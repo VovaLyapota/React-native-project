@@ -13,7 +13,7 @@ export const StyledFormContainer = ({ formType = "reg", children }) => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={formType === "reg" ? 0 : -200}
+      keyboardVerticalOffset={formType === "reg" ? 50 : -200}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>
