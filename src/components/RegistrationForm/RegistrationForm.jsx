@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import {
   formContainer,
@@ -10,8 +11,7 @@ import {
   passwordContainer,
   submitFormButton,
   submitFormButtonText,
-} from "../LogInForm/FormStyles";
-import { useState } from "react";
+} from "~components/LogInForm/FormStyles";
 
 export const RegistrationForm = () => {
   const [login, setLogin] = useState("");

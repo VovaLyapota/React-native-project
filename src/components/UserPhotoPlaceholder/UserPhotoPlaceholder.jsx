@@ -4,7 +4,7 @@ import {
   addButton,
   addButtonImage,
 } from "./UserPhotoPlaceholderStyles.js";
-const addUserImgIcon = require("../../images/addButtonIcon.png");
+const addUserImgIcon = require("~images/addButtonIcon.png");
 
 export const UserPhotoPlaceholder = () => {
   return (

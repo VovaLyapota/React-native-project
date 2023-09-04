@@ -1,6 +1,6 @@
 import { useFonts } from "expo-font";
-import { RegistrationScreen } from "./src/Screens/RegistrationScreen/RegistrationScreen";
-import { LogInScreen } from "./src/Screens/LogInScreen/LogInScreen";
+import { RegistrationScreen } from "~Screens/RegistrationScreen/RegistrationScreen";
+import { LogInScreen } from "~Screens/LogInScreen/LogInScreen";
 const mainRegularFont = require("./assets/fonts/RobotoRegular.ttf");
 const mainMediumFont = require("./assets/fonts/RobotoMedium.ttf");
 

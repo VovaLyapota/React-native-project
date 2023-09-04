@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 
-const backgroundImage = require("../../images/backgroundAppImage.jpg");
+const backgroundImage = require("~images/backgroundAppImage.jpg");
 
 export const StyledFormContainer = ({ formType = "reg", children }) => {
   return (
