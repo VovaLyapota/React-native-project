@@ -4,7 +4,11 @@ import { LogInForm } from "~components/LogInForm/LogInForm";
 
 export const LogInScreen = () => {
   return (
-    <StyledFormContainer formType="log">
+    <StyledFormContainer
+      whiteBoxHeigth={60}
+      whiteBoxTopPadding={33}
+      keyboardVerticalOffset={-200}
+    >
       <FormHeader>Увійти</FormHeader>
 
       <LogInForm />

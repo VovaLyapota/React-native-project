@@ -29,9 +29,3 @@ export const getBackButton = {
   top: 11,
   left: 16,
 };
-
-export const logOutBUtton = {
-  position: "absolute",
-  top: 11,
-  right: 16,
-};

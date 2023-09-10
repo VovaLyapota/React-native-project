@@ -6,14 +6,18 @@ export const publicationName = { fontFamily: "RobotoMedium", fontSize: 16 };
 
 export const publicationInfo = {
   flexDirection: "row",
-  justifyContent: "space-between",
+  gap: 24,
 };
 
 export const publicationDetails = {
   flexDirection: "row",
-  justifyContent: "space-between",
   alignItems: "center",
   gap: 4,
+};
+
+export const locationDetails = {
+  ...publicationDetails,
+  marginLeft: "auto",
 };
 
 export const comentsValue = {
@@ -23,7 +27,10 @@ export const comentsValue = {
 };
 
 export const location = {
+  color: "#212121",
+
+  textDecorationLine: "underline",
   fontFamily: "Roboto",
   fontSize: 16,
-  color: "#212121",
 };
+export const locationInputWithLocation = {};

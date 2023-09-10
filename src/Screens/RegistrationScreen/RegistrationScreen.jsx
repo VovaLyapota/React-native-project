@@ -5,7 +5,7 @@ import { RegistrationForm } from "~components/RegistrationForm/RegistrationForm"
 
 export const RegistrationScreen = () => {
   return (
-    <StyledFormContainer>
+    <StyledFormContainer whiteBoxHeigth={67}>
       <UserPhotoPlaceholder />
 
       <FormHeader>Реєстрація</FormHeader>

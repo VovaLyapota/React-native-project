@@ -1,9 +1,6 @@
-export const publicationsContainer = {
-  flexDirection: "column",
-  alignItems: "center",
-  paddingHorizontal: 16,
-};
-
 export const publications = {
+  flexDirection: "column",
+  paddingHorizontal: 16,
+
   width: "100%",
 };

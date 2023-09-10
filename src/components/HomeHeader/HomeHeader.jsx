@@ -4,8 +4,9 @@ import {
   homeHeader,
   headerNav,
   headerTitle,
-  logOutBUtton,
+  logOutButton,
 } from "./HomeHeaderStyles";
+import { LogOutButton } from "~components/LogOutButton/LogOutButton";
 const getBackIcon = require("~images/getBackIcon.png");
 const logOutIcon = require("~images/logOutIcon.png");
 
@@ -26,12 +27,7 @@ export const HomeHeader = ({ title }) => {
         ) : (
           <>
             <Text style={headerTitle}>Публікації</Text>
-            <TouchableOpacity
-              style={logOutBUtton}
-              //   onPress={returnToPreviousPath}
-            >
-              <Image source={logOutIcon} />
-            </TouchableOpacity>
+            <LogOutButton />
           </>
         )}
       </View>
