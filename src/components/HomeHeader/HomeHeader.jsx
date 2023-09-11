@@ -1,14 +1,13 @@
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
+import { SvgXml } from "react-native-svg";
+import { LogOutButton } from "~components/LogOutButton/LogOutButton";
+import getBackIcon from "~icons/getBackIcon.svg";
 import {
   getBackButton,
   homeHeader,
   headerNav,
   headerTitle,
-  logOutButton,
 } from "./HomeHeaderStyles";
-import { LogOutButton } from "~components/LogOutButton/LogOutButton";
-const getBackIcon = require("~images/getBackIcon.png");
-const logOutIcon = require("~images/logOutIcon.png");
 
 export const HomeHeader = ({ title }) => {
   return (
@@ -20,7 +19,7 @@ export const HomeHeader = ({ title }) => {
               style={getBackButton}
               //   onPress={returnToPreviousPath}
             >
-              <Image source={getBackIcon} />
+              <SvgXml xml={getBackIcon} />
             </TouchableOpacity>
             <Text style={headerTitle}>{title}</Text>
           </>

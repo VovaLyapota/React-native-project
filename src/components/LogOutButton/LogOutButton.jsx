@@ -1,7 +1,7 @@
 import { logOutButton, profileLogOutButton } from "./LogOutButtonStyles";
-import { Image, TouchableOpacity } from "react-native";
-
-const logOutIcon = require("~images/logOutIcon.png");
+import { TouchableOpacity } from "react-native";
+import { SvgXml } from "react-native-svg";
+import logOutIcon from "~icons/logOutIcon.svg";
 
 export const LogOutButton = ({ profile }) => {
   return (
@@ -9,7 +9,7 @@ export const LogOutButton = ({ profile }) => {
       style={[logOutButton, profile && profileLogOutButton]}
       //   onPress={returnToPreviousPath}
     >
-      <Image source={logOutIcon} />
+      <SvgXml width="100%" height="100%" xml={logOutIcon} />
     </TouchableOpacity>
   );
 };

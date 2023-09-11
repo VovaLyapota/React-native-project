@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { SvgXml } from "react-native-svg";
+import addLocationIcon from "~icons/locationIcon.svg";
+import addPhotoIcon from "~icons/cameraIcon.svg";
 import {
   addPhotoButton,
   addPhotoContiner,
@@ -18,8 +21,6 @@ import {
 } from "./CreatePostStyled";
 import { DeletePostButton } from "~components/DeletePostButton/DeletePostButton";
 import { KeyboardContainer } from "~components/KeyboardContainer/KeyboardContainer";
-const addPhotoIcon = require("~images/cameraIcon.png");
-const addLocationIcon = require("~images/locationIcon.png");
 const postImg = require("~images/fakePublicationPhoto.jpg");
 
 export const CreatePost = () => {
@@ -43,7 +44,7 @@ export const CreatePost = () => {
                   style={addPhotoButton}
                   onPress={() => setPhoto(true)}
                 >
-                  <Image source={addPhotoIcon} />
+                  <SvgXml xml={addPhotoIcon} />
                 </TouchableOpacity>
               )}
             </View>
@@ -81,7 +82,7 @@ export const CreatePost = () => {
                 value={location}
                 placeholder="Місцевість..."
               />
-              <Image source={addLocationIcon} style={locationIcon} />
+              <SvgXml xml={addLocationIcon} style={locationIcon} />
             </View>
             <TouchableOpacity
               style={[
