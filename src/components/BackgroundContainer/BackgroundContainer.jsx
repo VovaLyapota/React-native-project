@@ -7,7 +7,6 @@ export const BackgroundContainer = ({
   children,
 }) => {
   return (
-    // <View>
     <ImageBackground
       source={backgroundImage}
       style={{ width: "100%", height: "100%" }}
@@ -29,6 +28,5 @@ export const BackgroundContainer = ({
         {children}
       </View>
     </ImageBackground>
-    // </View>
   );
 };
