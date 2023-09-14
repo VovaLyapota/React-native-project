@@ -1,11 +1,10 @@
+import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import {
   formContainer,
   formInput,
   hoveredFormInput,
-  navButton,
-  navButtonText,
   passwordButton,
   passwordButtonText,
   passwordContainer,
@@ -20,6 +19,8 @@ export const RegistrationForm = () => {
   const [focusedInput, setFocusedInput] = useState(null);
   const [shouldHidePassword, setShouldHidePassword] = useState(true);
 
+  const navigation = useNavigation();
+
   const handleSubmit = () => {
     console.log("Login: ", login);
     console.log("Email: ", email);
@@ -28,6 +29,8 @@ export const RegistrationForm = () => {
     setLogin("");
     setEmail("");
     setPassword("");
+
+    navigation.navigate("Home");
   };
 
   return (
@@ -74,13 +77,6 @@ export const RegistrationForm = () => {
 
       <TouchableOpacity onPress={handleSubmit} style={submitFormButton}>
         <Text style={submitFormButtonText}>Зареєструватись</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        //   onPress={navigateToLogInForm}
-        style={navButton}
-      >
-        <Text style={navButtonText}>Вже є акаунт? Увійти</Text>
       </TouchableOpacity>
     </View>
   );

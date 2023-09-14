@@ -7,28 +7,28 @@ export const BackgroundContainer = ({
   children,
 }) => {
   return (
-    <View>
-      <ImageBackground
-        source={backgroundImage}
-        style={{ width: "100%", height: "100%" }}
+    // <View>
+    <ImageBackground
+      source={backgroundImage}
+      style={{ width: "100%", height: "100%" }}
+    >
+      <View
+        style={{
+          alignItems: "center",
+          marginTop: "auto",
+          paddingTop: whiteBoxTopPadding,
+
+          width: "100%",
+          height: `${whiteBoxHeigth}%`,
+
+          backgroundColor: "#FFFFFF",
+          borderTopLeftRadius: 25,
+          borderTopRightRadius: 25,
+        }}
       >
-        <View
-          style={{
-            alignItems: "center",
-            marginTop: "auto",
-            paddingTop: whiteBoxTopPadding,
-
-            width: "100%",
-            height: `${whiteBoxHeigth}%`,
-
-            backgroundColor: "#FFFFFF",
-            borderTopLeftRadius: 25,
-            borderTopRightRadius: 25,
-          }}
-        >
-          {children}
-        </View>
-      </ImageBackground>
-    </View>
+        {children}
+      </View>
+    </ImageBackground>
+    // </View>
   );
 };

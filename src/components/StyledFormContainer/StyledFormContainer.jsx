@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import { ImageBackground, View } from "react-native";
 import { BackgroundContainer } from "~components/BackgroundContainer/BackgroundContainer";
 import { KeyboardContainer } from "~components/KeyboardContainer/KeyboardContainer";
 

@@ -1,14 +1,15 @@
 import "react-native-gesture-handler";
 import { useFonts } from "expo-font";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import { RegistrationScreen } from "~Screens/RegistrationScreen/RegistrationScreen";
 import { LogInScreen } from "~Screens/LogInScreen/LogInScreen";
 import { Home } from "~Screens/Home/Home";
-import { CreatePostsScreen } from "~Screens/CreatePostsScreen/CreatePostsScreen";
-import { CommentsScreen } from "~Screens/CommentsScreen/CommentsScreen";
-import { ProfileScreen } from "~Screens/ProfileScreen/ProfileScreen";
 const mainRegularFont = require("./assets/fonts/RobotoRegular.ttf");
 const mainMediumFont = require("./assets/fonts/RobotoMedium.ttf");
 const mainBoldFont = require("./assets/fonts/RobotoBold.ttf");
+
+const MainStack = createStackNavigator();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,11 +21,32 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-
-  // return <LogInScreen />;
-  // return <RegistrationScreen />;
-  // return <Home />;
-  // return <CreatePostsScreen />;
-  // return <CommentsScreen />;
-  return <ProfileScreen />;
+  //  Registration  Login  Home  Create  Comments  Profile
+  return (
+    <NavigationContainer>
+      <MainStack.Navigator initialRouteName="Registration">
+        <MainStack.Screen
+          name="Registration"
+          component={RegistrationScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <MainStack.Screen
+          name="Login"
+          component={LogInScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <MainStack.Screen
+          name="Home"
+          component={Home}
+          options={{
+            headerShown: false,
+          }}
+        />
+      </MainStack.Navigator>
+    </NavigationContainer>
+  );
 }
