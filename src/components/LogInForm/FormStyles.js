@@ -59,17 +59,3 @@ export const submitFormButtonText = {
   fontFamily: "Roboto",
   fontSize: 16,
 };
-
-export const navButton = {
-  alignItems: "center",
-  marginLeft: "auto",
-  marginRight: "auto",
-
-  width: "92%",
-};
-
-export const navButtonText = {
-  color: "#1B4371",
-  fontFamily: "Roboto",
-  fontSize: 16,
-};

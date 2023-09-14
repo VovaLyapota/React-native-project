@@ -1,47 +1,27 @@
-import {
-  ImageBackground,
-  Keyboard,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
 import PropTypes from "prop-types";
+import { BackgroundContainer } from "~components/BackgroundContainer/BackgroundContainer";
+import { KeyboardContainer } from "~components/KeyboardContainer/KeyboardContainer";
 
-const backgroundImage = require("../../images/backgroundAppImage.jpg");
-
-export const StyledFormContainer = ({ formType = "reg", children }) => {
+export const StyledFormContainer = ({
+  whiteBoxHeigth,
+  whiteBoxTopPadding = 0,
+  keyboardVerticalOffset = 50,
+  children,
+}) => {
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={formType === "reg" ? 50 : -200}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View>
-          <ImageBackground
-            source={backgroundImage}
-            style={{ width: "100%", height: "100%" }}
-          >
-            <View
-              style={{
-                alignItems: "center",
-                marginTop: "auto",
-                paddingTop: formType === "reg" ? 0 : 33,
-
-                width: "100%",
-                height: `${formType === "reg" ? 67 : 60}%`,
-
-                backgroundColor: "#FFFFFF",
-                borderTopLeftRadius: 25,
-                borderTopRightRadius: 25,
-              }}
-            >
-              {children}
-            </View>
-          </ImageBackground>
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    <KeyboardContainer keyboardVerticalOffset={keyboardVerticalOffset}>
+      <BackgroundContainer
+        whiteBoxHeigth={whiteBoxHeigth}
+        whiteBoxTopPadding={whiteBoxTopPadding}
+      >
+        {children}
+      </BackgroundContainer>
+    </KeyboardContainer>
   );
 };
 
-StyledFormContainer.propTypes = { formType: PropTypes.string };
+StyledFormContainer.propTypes = {
+  whiteBoxHeigth: PropTypes.number,
+  whiteBoxTopPadding: PropTypes.number,
+  keyboardVerticalOffset: PropTypes.number,
+};

@@ -11,24 +11,10 @@ export const photoPlaseholderContainer = {
   borderRadius: 25,
 };
 
+export const userPhoto = { width: 120, height: 120, borderRadius: 16 };
+
 export const addButton = {
   position: "absolute",
-  bottom: 12,
-  right: -12,
-
-  width: 25,
-  height: 25,
-
-  borderWidth: 1,
-  borderColor: "#FF6C00",
-  borderRadius: 12.5,
-};
-
-export const addButtonImage = {
-  position: "absolute",
-  top: 5.25,
-  left: 5.25,
-
-  width: 13,
-  height: 13,
+  bottom: 6,
+  right: -18,
 };
