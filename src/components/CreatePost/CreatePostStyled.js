@@ -32,6 +32,7 @@ export const addPhotoButton = {
   height: 60,
 
   backgroundColor: "#FFFFFF",
+  opacity: 0.7,
   borderRadius: 30,
 };
 

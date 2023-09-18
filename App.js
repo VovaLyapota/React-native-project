@@ -23,7 +23,7 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-  //  Registration  Login  Home  Create  Comments  Profile
+
   return (
     <NavigationContainer>
       <MainStack.Navigator initialRouteName="Registration">

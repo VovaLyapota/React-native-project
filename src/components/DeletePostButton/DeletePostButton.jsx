@@ -3,9 +3,9 @@ import { SvgXml } from "react-native-svg";
 import removePhotoIcon from "~icons/trashIcon.svg";
 import { deletePostButton } from "./DeletePostButtonStyles";
 
-export const DeletePostButton = () => {
+export const DeletePostButton = ({ callback }) => {
   return (
-    <TouchableOpacity style={deletePostButton}>
+    <TouchableOpacity style={deletePostButton} onPress={callback}>
       <SvgXml xml={removePhotoIcon} />
     </TouchableOpacity>
   );
