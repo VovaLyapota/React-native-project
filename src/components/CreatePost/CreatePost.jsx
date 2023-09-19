@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { Camera } from "expo-camera";
+import * as MediaLibrary from "expo-media-library";
+import * as Location from "expo-location";
+import { useEffect, useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SvgXml } from "react-native-svg";
 import addLocationIcon from "~icons/locationIcon.svg";
@@ -21,37 +24,89 @@ import {
 } from "./CreatePostStyled";
 import { DeletePostButton } from "~components/DeletePostButton/DeletePostButton";
 import { KeyboardContainer } from "~components/KeyboardContainer/KeyboardContainer";
-const postImg = require("~images/fakePublicationPhoto.jpg");
 
 export const CreatePost = () => {
-  const [photo, setPhoto] = useState(null);
+  const [photoSource, setPhotoSource] = useState(null);
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [focusedInput, setFocusedInput] = useState(null);
 
-  const shouldLetSubmitForm = name.length > 0 && location.length > 0 && photo;
+  const [hasPermission, setHasPermission] = useState(null);
+  const [cameraRef, setCameraRef] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      await MediaLibrary.requestPermissionsAsync();
+      await Location.requestForegroundPermissionsAsync();
+
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+
+  const handleSubmit = async () => {
+    let currentLocation = await Location.getCurrentPositionAsync({});
+    console.log(name);
+    console.log(currentLocation);
+    console.log(location);
+  };
+
+  const shouldLetSubmitForm =
+    name.length > 0 && location.length > 0 && photoSource;
+
+  if (hasPermission === null) {
+    return <View />;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
 
   return (
     <>
       <KeyboardContainer>
         <View style={createPostContainer}>
           <View>
-            <View style={[addPhotoContiner, photo && { borderWidth: 0 }]}>
-              {photo ? (
-                <Image source={postImg} style={selectedPhoto} />
+            <View style={[addPhotoContiner, photoSource && { borderWidth: 0 }]}>
+              {photoSource !== null ? (
+                <Image source={{ uri: photoSource }} style={selectedPhoto} />
               ) : (
-                <TouchableOpacity
-                  style={addPhotoButton}
-                  onPress={() => setPhoto(true)}
+                <Camera
+                  style={{
+                    overflow: "hidden",
+                    borderRadius: 8,
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  type={type}
+                  ref={setCameraRef}
                 >
-                  <SvgXml xml={addPhotoIcon} />
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    style={addPhotoButton}
+                    onPress={async () => {
+                      if (hasPermission === false) return;
+
+                      if (cameraRef) {
+                        const { uri } = await cameraRef.takePictureAsync();
+                        const { id } = await MediaLibrary.createAssetAsync(uri);
+                        const { localUri } =
+                          await MediaLibrary.getAssetInfoAsync(id);
+                        setPhotoSource(localUri);
+                      }
+                    }}
+                  >
+                    <SvgXml xml={addPhotoIcon} />
+                  </TouchableOpacity>
+                </Camera>
               )}
             </View>
 
-            <TouchableOpacity style={{ marginBottom: 32 }}>
+            <TouchableOpacity
+              style={{ marginBottom: 32 }}
+              onPress={() => setPhotoSource(null)}
+            >
               <Text style={addPhotoTextButton}>
-                {photo ? "Змініть" : "Завантажте"} фото
+                {photoSource ? "Видалити" : "Завантажте"} фото
               </Text>
             </TouchableOpacity>
           </View>
@@ -89,6 +144,7 @@ export const CreatePost = () => {
                 submitButtonDisabled,
                 shouldLetSubmitForm && submitButtonActive,
               ]}
+              onPress={handleSubmit}
             >
               <Text
                 style={[
@@ -102,7 +158,7 @@ export const CreatePost = () => {
           </View>
         </View>
       </KeyboardContainer>
-      <DeletePostButton />
+      <DeletePostButton callback={() => setPhotoSource(null)} />
     </>
   );
 };

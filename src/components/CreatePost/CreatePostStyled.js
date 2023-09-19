@@ -17,7 +17,7 @@ export const addPhotoContiner = {
   borderRadius: 8,
 };
 
-export const selectedPhoto = { width: "100%", borderRadius: 8 };
+export const selectedPhoto = { width: "100%", height: "100%", borderRadius: 8 };
 
 export const addPhotoButton = {
   position: "absolute",
@@ -32,6 +32,7 @@ export const addPhotoButton = {
   height: 60,
 
   backgroundColor: "#FFFFFF",
+  opacity: 0.7,
   borderRadius: 30,
 };
 

@@ -40,13 +40,16 @@ export const PublicationsItem = ({ profile }) => {
           </View>
         )}
 
-        <View style={locationDetails}>
+        <TouchableOpacity
+          style={locationDetails}
+          onPress={() => navigation.navigate("MapScreen")}
+        >
           <SvgXml xml={locationIcon} />
 
           <Text style={location}>
             {!profile && "Ivano-Frankivs'k Region, "}Ukraine
           </Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
