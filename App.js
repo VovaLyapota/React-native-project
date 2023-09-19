@@ -7,6 +7,7 @@ import { LogInScreen } from "~Screens/LogInScreen/LogInScreen";
 import { Home } from "~Screens/Home/Home";
 import { CommentsScreen } from "~Screens/CommentsScreen/CommentsScreen";
 import { GetBackButton } from "~components/GetBackButton/GetBackButton";
+import { MapScreen } from "~Screens/MapScreen/MapScreen";
 const mainRegularFont = require("./assets/fonts/RobotoRegular.ttf");
 const mainMediumFont = require("./assets/fonts/RobotoMedium.ttf");
 const mainBoldFont = require("./assets/fonts/RobotoBold.ttf");
@@ -26,7 +27,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <MainStack.Navigator initialRouteName="Home">
+      <MainStack.Navigator initialRouteName="Registration">
         <MainStack.Screen
           name="Registration"
           component={RegistrationScreen}
@@ -53,6 +54,16 @@ export default function App() {
           component={CommentsScreen}
           options={{
             title: "Коментарі",
+            headerTitleAlign: "center",
+
+            headerLeft: () => <GetBackButton />,
+          }}
+        />
+        <MainStack.Screen
+          name="MapScreen"
+          component={MapScreen}
+          options={{
+            title: "Карта",
             headerTitleAlign: "center",
 
             headerLeft: () => <GetBackButton />,
