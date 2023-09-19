@@ -1,5 +1,6 @@
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
+import * as Location from "expo-location";
 import { useEffect, useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SvgXml } from "react-native-svg";
@@ -26,8 +27,6 @@ import { KeyboardContainer } from "~components/KeyboardContainer/KeyboardContain
 
 export const CreatePost = () => {
   const [photoSource, setPhotoSource] = useState(null);
-  console.log(photoSource, typeof photoSource);
-
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [focusedInput, setFocusedInput] = useState(null);
@@ -40,10 +39,21 @@ export const CreatePost = () => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       await MediaLibrary.requestPermissionsAsync();
+      await Location.requestForegroundPermissionsAsync();
 
       setHasPermission(status === "granted");
     })();
   }, []);
+
+  const handleSubmit = async () => {
+    let currentLocation = await Location.getCurrentPositionAsync({});
+    console.log(name);
+    console.log(currentLocation);
+    console.log(location);
+  };
+
+  const shouldLetSubmitForm =
+    name.length > 0 && location.length > 0 && photoSource;
 
   if (hasPermission === null) {
     return <View />;
@@ -51,9 +61,6 @@ export const CreatePost = () => {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
-
-  const shouldLetSubmitForm =
-    name.length > 0 && location.length > 0 && photoSource;
 
   return (
     <>
@@ -77,6 +84,8 @@ export const CreatePost = () => {
                   <TouchableOpacity
                     style={addPhotoButton}
                     onPress={async () => {
+                      if (hasPermission === false) return;
+
                       if (cameraRef) {
                         const { uri } = await cameraRef.takePictureAsync();
                         const { id } = await MediaLibrary.createAssetAsync(uri);
@@ -92,9 +101,12 @@ export const CreatePost = () => {
               )}
             </View>
 
-            <TouchableOpacity style={{ marginBottom: 32 }}>
+            <TouchableOpacity
+              style={{ marginBottom: 32 }}
+              onPress={() => setPhotoSource(null)}
+            >
               <Text style={addPhotoTextButton}>
-                {photoSource ? "Змініть" : "Завантажте"} фото
+                {photoSource ? "Видалити" : "Завантажте"} фото
               </Text>
             </TouchableOpacity>
           </View>
@@ -132,6 +144,7 @@ export const CreatePost = () => {
                 submitButtonDisabled,
                 shouldLetSubmitForm && submitButtonActive,
               ]}
+              onPress={handleSubmit}
             >
               <Text
                 style={[
