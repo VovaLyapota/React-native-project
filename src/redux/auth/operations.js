@@ -59,6 +59,19 @@ export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   }
 });
 
+export const updateUser = createAsyncThunk(
+  "auth/updateUser",
+  async (update, thunkAPI) => {
+    try {
+      await updateUserProfile(update);
+
+      return getCurrentUser();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 export const refreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
@@ -73,19 +86,6 @@ export const refreshUser = createAsyncThunk(
       // setAuthHeader(persistedToken);
       // const { data } = await axios.get("/users/current");
       return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
-
-export const updateUser = createAsyncThunk(
-  "auth/updateUser",
-  async (update, thunkAPI) => {
-    try {
-      await updateUserProfile(update);
-
-      return getCurrentUser();
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
