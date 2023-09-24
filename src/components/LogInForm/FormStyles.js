@@ -54,6 +54,13 @@ export const submitFormButton = {
   backgroundColor: "#FF6C00",
 };
 
+export const submitFormButtonDisabled = {
+  color: "#BDBDBD",
+  backgroundColor: "#F6F6F6",
+
+  pointerEvents: "none",
+};
+
 export const submitFormButtonText = {
   color: "#FFFFFF",
   fontFamily: "Roboto",

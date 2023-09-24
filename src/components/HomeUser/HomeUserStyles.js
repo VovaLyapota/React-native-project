@@ -6,6 +6,11 @@ export const homeUserContainer = {
   gap: 8,
 };
 
+export const userImageContainer = {
+  backgroundColor: "#F6F6F6",
+  borderRadius: 16,
+};
+
 export const userImage = {
   width: 60,
   height: 60,

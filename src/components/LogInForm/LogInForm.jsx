@@ -7,27 +7,43 @@ import {
   passwordButtonText,
   passwordContainer,
   submitFormButton,
+  submitFormButtonDisabled,
   submitFormButtonText,
 } from "./FormStyles";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { logIn } from "~redux/auth/operations";
+import { toast } from "~utils/toast";
 
 export const LogInForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [focusedInput, setFocusedInput] = useState(null);
   const [shouldHidePassword, setShouldHidePassword] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const handleSubmit = () => {
-    console.log("Email: ", email);
-    console.log("Password: ", password);
+    setIsSubmitting(true);
 
+    dispatch(logIn({ email, password }))
+      .then((response) => {
+        if (typeof response.payload === "string") {
+          toast(response.payload, 2500);
+          return;
+        }
+        resetForm();
+        navigation.navigate("Home");
+      })
+      .finally(() => setIsSubmitting(false));
+  };
+
+  const resetForm = () => {
     setEmail("");
     setPassword("");
-
-    navigation.navigate("Home");
   };
 
   return (
@@ -63,7 +79,10 @@ export const LogInForm = () => {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity onPress={handleSubmit} style={submitFormButton}>
+      <TouchableOpacity
+        onPress={handleSubmit}
+        style={[submitFormButton, isSubmitting && submitFormButtonDisabled]}
+      >
         <Text style={submitFormButtonText}>Увійти</Text>
       </TouchableOpacity>
     </View>

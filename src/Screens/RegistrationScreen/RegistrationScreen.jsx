@@ -3,13 +3,16 @@ import { UserPhotoPlaceholder } from "~components/UserPhotoPlaceholder/UserPhoto
 import { FormHeader } from "~components/FormHeader/FormHeader";
 import { RegistrationForm } from "~components/RegistrationForm/RegistrationForm";
 import { SwitchFormButton } from "~components/SwitchFormButton/SwitchFormButton";
+import { useState } from "react";
 
 export const RegistrationScreen = () => {
+  const [userPhoto, setUserPhoto] = useState(null);
+
   return (
     <StyledFormContainer whiteBoxHeigth={67} keyboardVerticalOffset={0}>
-      <UserPhotoPlaceholder />
+      <UserPhotoPlaceholder onPhotoChange={(data) => setUserPhoto(data)} />
       <FormHeader>Реєстрація</FormHeader>
-      <RegistrationForm />
+      <RegistrationForm userPhotoURL={userPhoto} />
 
       <SwitchFormButton title={"Вже є акаунт? Увійти"} path={"Login"} />
     </StyledFormContainer>
