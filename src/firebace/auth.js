@@ -3,6 +3,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   updateProfile,
+  signOut,
 } from "firebase/auth";
 import { auth } from "../../config";
 
@@ -23,6 +24,14 @@ export const loginDB = async ({ email, password }) => {
   try {
     const credentials = await signInWithEmailAndPassword(auth, email, password);
     return credentials.user;
+  } catch (error) {
+    return error.code;
+  }
+};
+
+export const logoutDB = async () => {
+  try {
+    await signOut(auth);
   } catch (error) {
     return error.code;
   }

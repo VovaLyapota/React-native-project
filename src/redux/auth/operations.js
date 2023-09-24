@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   getCurrentUser,
   loginDB,
+  logoutDB,
   registerDB,
   updateUserProfile,
 } from "~firebace/auth";
@@ -52,8 +53,7 @@ export const logIn = createAsyncThunk(
 
 export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
-    // await axios.post("/users/logout");
-    // clearAuthHeader();
+    await logoutDB();
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
