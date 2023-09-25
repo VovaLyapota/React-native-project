@@ -4,7 +4,6 @@ import { FormHeader } from "~components/FormHeader/FormHeader";
 import { RegistrationForm } from "~components/RegistrationForm/RegistrationForm";
 import { SwitchFormButton } from "~components/SwitchFormButton/SwitchFormButton";
 import { useState } from "react";
-
 export const RegistrationScreen = () => {
   const [userPhoto, setUserPhoto] = useState(null);
 

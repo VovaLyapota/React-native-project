@@ -50,6 +50,7 @@ export const Home = () => {
         options={{
           title: "Публікації",
           headerTitleAlign: "center",
+          gesturesEnabled: false,
 
           headerRight: () => <LogOutButton />,
         }}
@@ -61,6 +62,7 @@ export const Home = () => {
           title: "Створити публікацію",
           headerTitleAlign: "center",
           tabBarStyle: { display: "none" },
+          gesturesEnabled: false,
 
           headerLeft: () => <GetBackButton />,
         }}
@@ -70,6 +72,7 @@ export const Home = () => {
         component={ProfileScreen}
         options={{
           headerShown: false,
+          gesturesEnabled: false,
         }}
       />
     </Tabs.Navigator>

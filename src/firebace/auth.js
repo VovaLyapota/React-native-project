@@ -14,6 +14,7 @@ export const registerDB = async ({ email, password }) => {
       email,
       password
     );
+
     return createResult;
   } catch (error) {
     return error.code;
@@ -45,9 +46,8 @@ export const authStateChanged = async (onChange = () => {}) => {
 
 export const updateUserProfile = async (update) => {
   const user = auth.currentUser;
-  // якщо такий користувач знайдений
+
   if (user) {
-    // оновлюємо його профайл
     try {
       await updateProfile(user, update);
     } catch (error) {

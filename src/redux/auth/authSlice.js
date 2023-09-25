@@ -16,11 +16,7 @@ export const authSlice = createSlice({
       .addCase(register.fulfilled, onAuthSuccess)
       .addCase(logIn.fulfilled, onAuthSuccess)
       .addCase(updateUser.fulfilled, onAuthSuccess)
-      .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload;
-
-        state.isLoggedIn = true;
-      })
+      // .addCase(refreshUser.fulfilled, onAuthSuccess)
       .addCase(logOut.fulfilled, (state) => {
         state.user = { name: null, email: null, userPhoto: null };
         state.token = null;

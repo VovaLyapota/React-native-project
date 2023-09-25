@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { auth } from "../../../config";
 import {
   getCurrentUser,
   loginDB,
@@ -66,22 +67,22 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-export const refreshUser = createAsyncThunk(
-  "auth/refresh",
-  async (_, thunkAPI) => {
-    // const state = thunkAPI.getState();
-    // const persistedToken = state.auth.token;
+// export const refreshUser = createAsyncThunk(
+//   "auth/refresh",
+//   async (persistedToken, thunkAPI) => {
+//     if (persistedToken === null) {
+//       return thunkAPI.rejectWithValue("Unable to fetch user");
+//     }
 
-    // if (persistedToken === null) {
-    //   return thunkAPI.rejectWithValue("Unable to fetch user");
-    // }
-
-    try {
-      // setAuthHeader(persistedToken);
-      // const { data } = await axios.get("/users/current");
-      return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+//     try {
+//       const refreshedUser = auth.currentUser;
+//       console.log("refreshedUser: ", refreshedUser);
+//       console.log("auth: ", auth);
+//       return refreshedUser;
+//     } catch (error) {
+//       console.log("error");
+//       console.log(error.message);
+//       return thunkAPI.rejectWithValue(error.message);
+//     }
+//   }
+// );

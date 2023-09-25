@@ -6,18 +6,23 @@ import { Home } from "~Screens/Home/Home";
 import { CommentsScreen } from "~Screens/CommentsScreen/CommentsScreen";
 import { GetBackButton } from "~components/GetBackButton/GetBackButton";
 import { MapScreen } from "~Screens/MapScreen/MapScreen";
+import { useSelector } from "react-redux";
+import { selectToken } from "~redux/auth/selectors";
 
 const MainStack = createStackNavigator();
 
 export const MainNav = () => {
+  const token = useSelector(selectToken);
+
   return (
     <NavigationContainer>
-      <MainStack.Navigator initialRouteName="Registration">
+      <MainStack.Navigator initialRouteName={token ? "Home" : "Registration"}>
         <MainStack.Screen
           name="Registration"
           component={RegistrationScreen}
           options={{
             headerShown: false,
+            gestureEnabled: false,
           }}
         />
         <MainStack.Screen
@@ -25,6 +30,7 @@ export const MainNav = () => {
           component={LogInScreen}
           options={{
             headerShown: false,
+            gestureEnabled: false,
           }}
         />
         <MainStack.Screen
@@ -32,6 +38,7 @@ export const MainNav = () => {
           component={Home}
           options={{
             headerShown: false,
+            gesturesEnabled: false,
           }}
         />
         <MainStack.Screen

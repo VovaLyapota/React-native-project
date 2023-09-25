@@ -16,7 +16,7 @@ import publicationsReducer from "./publications/publicationsSlice";
 const authPersistConfig = {
   key: "auth",
   storage: AsyncStorage,
-  whitelist: ["token"],
+  // whitelist: ["token"],
 };
 
 const persistedAuthReduser = persistReducer(authPersistConfig, authReducer);
