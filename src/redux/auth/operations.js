@@ -6,12 +6,6 @@ import {
   registerDB,
   updateUserProfile,
 } from "~firebace/auth";
-// const setAuthHeader = (token) => {
-//   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-// };
-// const clearAuthHeader = () => {
-//   axios.defaults.headers.common.Authorization = "";
-// };
 
 export const register = createAsyncThunk(
   "auth/register",
