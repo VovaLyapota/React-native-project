@@ -21,15 +21,23 @@ import {
   submitButtonDisabled,
   submitTextActive,
   submitTextDisabled,
+  cameraStyles,
 } from "./CreatePostStyled";
 import { DeletePostButton } from "~components/DeletePostButton/DeletePostButton";
 import { KeyboardContainer } from "~components/KeyboardContainer/KeyboardContainer";
+import { useDispatch, useSelector } from "react-redux";
+import { selectToken } from "~redux/auth/selectors";
+import { addPublication } from "~redux/publications/operations";
 
 export const CreatePost = () => {
+  const token = useSelector(selectToken);
+  const dispatch = useDispatch();
+
   const [photoSource, setPhotoSource] = useState(null);
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [focusedInput, setFocusedInput] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
@@ -46,10 +54,24 @@ export const CreatePost = () => {
   }, []);
 
   const handleSubmit = async () => {
-    let currentLocation = await Location.getCurrentPositionAsync({});
-    console.log(name);
-    console.log(currentLocation);
-    console.log(location);
+    try {
+      setIsSubmitting(true);
+      const { coords } = await Location.getCurrentPositionAsync({});
+
+      dispatch(
+        addPublication({
+          authorUID: token,
+          photoURL: photoSource,
+          photoName: name,
+          location,
+          coords,
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const shouldLetSubmitForm =
@@ -71,16 +93,7 @@ export const CreatePost = () => {
               {photoSource !== null ? (
                 <Image source={{ uri: photoSource }} style={selectedPhoto} />
               ) : (
-                <Camera
-                  style={{
-                    overflow: "hidden",
-                    borderRadius: 8,
-                    width: "100%",
-                    height: "100%",
-                  }}
-                  type={type}
-                  ref={setCameraRef}
-                >
+                <Camera style={cameraStyles} type={type} ref={setCameraRef}>
                   <TouchableOpacity
                     style={addPhotoButton}
                     onPress={async () => {
@@ -143,6 +156,7 @@ export const CreatePost = () => {
               style={[
                 submitButtonDisabled,
                 shouldLetSubmitForm && submitButtonActive,
+                isSubmitting && submitButtonDisabled,
               ]}
               onPress={handleSubmit}
             >
@@ -150,6 +164,7 @@ export const CreatePost = () => {
                 style={[
                   submitTextDisabled,
                   shouldLetSubmitForm && submitTextActive,
+                  isSubmitting && submitTextDisabled,
                 ]}
               >
                 Опубліковати

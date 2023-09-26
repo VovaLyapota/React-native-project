@@ -31,7 +31,9 @@ export const UserPhotoPlaceholder = ({ onPhotoChange }) => {
 
   return (
     <View style={photoPlaseholderContainer}>
-      {image ? <Image source={{ uri: image }} style={userPhotoStyles} /> : null}
+      {image ? (
+        <Image source={{ uri: userPhoto || image }} style={userPhotoStyles} />
+      ) : null}
       <TouchableOpacity
         style={[addButton, !image && { transform: [{ rotate: "45deg" }] }]}
         onPress={pickImage}

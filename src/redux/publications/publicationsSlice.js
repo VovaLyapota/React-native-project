@@ -10,24 +10,23 @@ export const publicationsSlice = createSlice({
   name: "publications",
   initialState: {
     items: [],
-    isLoading: false,
-    error: null,
+    // isLoading: false,
+    // error: null,
   },
 
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPublications.pending, handlePending)
-      .addCase(addPublication.pending, handlePending)
-      .addCase(fetchPublications.rejected, handleRejected)
-      .addCase(addPublication.rejected, handleRejected)
+      // .addCase(fetchPublications.pending, handlePending)
+      // .addCase(addPublication.pending, handlePending)
+      // .addCase(fetchPublications.rejected, handleRejected)
+      // .addCase(addPublication.rejected, handleRejected)
       .addCase(fetchPublications.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = null;
+        // state.isLoading = false;
+        // state.error = null;
+        console.log("fetchPublications payload: ", action.payload);
         state.items = action.payload;
       })
       .addCase(addPublication.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = null;
         state.items = [...state.items, action.payload];
       });
     //     .addCase(editPublication.pending, handlePending)

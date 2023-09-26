@@ -15,28 +15,35 @@ import {
   publicationInfo,
   publicationName,
 } from "./PublicationsItemStyles";
-const postImg = require("~images/fakePublicationPhoto.jpg");
 
-export const PublicationsItem = ({ profile }) => {
+export const PublicationsItem = ({
+  profile,
+  comments,
+  likes,
+  postCoords,
+  postImage,
+  postLocation,
+  postName,
+}) => {
   const navigation = useNavigation();
 
   return (
     <View style={publicationContainer}>
-      <Image source={postImg} style={publicationImage} />
-      <Text style={publicationName}>Ліс</Text>
+      <Image source={{ uri: postImage }} style={publicationImage} />
+      <Text style={publicationName}>{postName}</Text>
       <View style={publicationInfo}>
         <TouchableOpacity
           style={publicationDetails}
           onPress={() => navigation.navigate("PostComments")}
         >
           <SvgXml xml={profile ? profileComentIcon : comentIcon} />
-          <Text style={comentsValue}>0</Text>
+          <Text style={comentsValue}>{comments.length}</Text>
         </TouchableOpacity>
 
         {profile && (
           <View style={publicationDetails}>
             <SvgXml xml={likeIcon} />
-            <Text style={comentsValue}>153</Text>
+            <Text style={comentsValue}>{likes}</Text>
           </View>
         )}
 
@@ -46,9 +53,7 @@ export const PublicationsItem = ({ profile }) => {
         >
           <SvgXml xml={locationIcon} />
 
-          <Text style={location}>
-            {!profile && "Ivano-Frankivs'k Region, "}Ukraine
-          </Text>
+          <Text style={location}>{postLocation}</Text>
         </TouchableOpacity>
       </View>
     </View>

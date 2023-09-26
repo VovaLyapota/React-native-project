@@ -1,12 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-// import axios from "axios";
+import { addPublicationDB, getAllPublicationsDB } from "~firebace/firestore";
 
 export const fetchPublications = createAsyncThunk(
   "publications/fetchAllPublications",
-  async (_, thunkAPI) => {
+  async (token, thunkAPI) => {
     try {
-      //   const { data } = await axios("/publications");
-      //   return data;
+      const fechedPublications = await getAllPublicationsDB(token);
+
+      if (fechedPublications) {
+        return fechedPublications;
+      }
+      return [];
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -15,10 +19,10 @@ export const fetchPublications = createAsyncThunk(
 
 export const addPublication = createAsyncThunk(
   "publications/addPublication",
-  async (contact, thunkAPI) => {
+  async (publicationData, thunkAPI) => {
     try {
-      //   const { data } = await axios.post("/publications", contact);
-      //   return data;
+      const addResult = await addPublicationDB(publicationData);
+      return addResult;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
