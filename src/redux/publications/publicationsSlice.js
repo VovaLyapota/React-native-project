@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   fetchPublications,
   addPublication,
+  resetPublications,
   //   deletePublication,
   //   editPublication,
 } from "./operations";
@@ -23,13 +24,14 @@ export const publicationsSlice = createSlice({
       .addCase(fetchPublications.fulfilled, (state, action) => {
         // state.isLoading = false;
         // state.error = null;
-        console.log("fetchPublications payload: ", action.payload);
         state.items = action.payload;
       })
       .addCase(addPublication.fulfilled, (state, action) => {
         state.items = [...state.items, action.payload];
+      })
+      .addCase(resetPublications.fulfilled, (state, action) => {
+        state.items = action.payload;
       });
-    //     .addCase(editPublication.pending, handlePending)
     //     .addCase(editPublication.rejected, handleRejected)
     //     .addCase(deletePublication.pending, handlePending)
     //     .addCase(deletePublication.rejected, handleRejected)

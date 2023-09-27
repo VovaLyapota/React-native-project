@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { auth } from "../../../config";
 import {
   getCurrentUser,
   loginDB,
@@ -7,11 +6,15 @@ import {
   registerDB,
   updateUserProfile,
 } from "~firebace/auth";
+import { addUserDB, checkNewUserNameDB } from "~firebace/firestore";
 
 export const register = createAsyncThunk(
   "auth/register",
   async ({ login, userPhotoURL, email, password }, thunkAPI) => {
     try {
+      const hasName = await checkNewUserNameDB(login);
+      if (hasName) throw new Error("This name has alredy been used!");
+
       const registerResult = await registerDB({ email, password });
       if (registerResult === "auth/email-already-in-use")
         throw new Error("This email has alredy been used!");
@@ -20,8 +23,13 @@ export const register = createAsyncThunk(
         displayName: login,
         photoURL: userPhotoURL,
       });
+      await addUserDB({
+        authorName: login,
+        authorUID: registerResult.user.uid,
+        authorPhoto: userPhotoURL,
+      });
 
-      return getCurrentUser();
+      return registerResult.user;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

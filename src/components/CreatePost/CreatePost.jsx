@@ -26,15 +26,17 @@ import {
 import { DeletePostButton } from "~components/DeletePostButton/DeletePostButton";
 import { KeyboardContainer } from "~components/KeyboardContainer/KeyboardContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { selectToken } from "~redux/auth/selectors";
+import { selectUser } from "~redux/auth/selectors";
 import { addPublication } from "~redux/publications/operations";
+import { useNavigation } from "@react-navigation/native";
 
 export const CreatePost = () => {
-  const token = useSelector(selectToken);
+  const { name } = useSelector(selectUser);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const [photoSource, setPhotoSource] = useState(null);
-  const [name, setName] = useState("");
+  const [postName, setPostName] = useState("");
   const [location, setLocation] = useState("");
   const [focusedInput, setFocusedInput] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -60,13 +62,16 @@ export const CreatePost = () => {
 
       dispatch(
         addPublication({
-          authorUID: token,
+          authorName: name,
           photoURL: photoSource,
-          photoName: name,
+          photoName: postName,
           location,
           coords,
         })
       );
+
+      resetForm();
+      navigation.goBack();
     } catch (error) {
       console.log(error);
     } finally {
@@ -74,8 +79,14 @@ export const CreatePost = () => {
     }
   };
 
+  const resetForm = () => {
+    setPhotoSource(null);
+    setPostName("");
+    setLocation("");
+  };
+
   const shouldLetSubmitForm =
-    name.length > 0 && location.length > 0 && photoSource;
+    postName.length > 0 && location.length > 0 && photoSource;
 
   if (hasPermission === null) {
     return <View />;
@@ -128,13 +139,13 @@ export const CreatePost = () => {
             <TextInput
               style={[
                 publicationInput,
-                name.length > 0 && publicationInputWithText,
-                focusedInput === "name" && publicationInputFocused,
+                postName.length > 0 && publicationInputWithText,
+                focusedInput === "postName" && publicationInputFocused,
               ]}
-              onFocus={() => setFocusedInput("name")}
+              onFocus={() => setFocusedInput("postName")}
               onBlur={() => setFocusedInput(null)}
-              onChangeText={setName}
-              value={name}
+              onChangeText={setPostName}
+              value={postName}
               placeholder="Назва..."
             />
 
@@ -173,7 +184,7 @@ export const CreatePost = () => {
           </View>
         </View>
       </KeyboardContainer>
-      <DeletePostButton callback={() => setPhotoSource(null)} />
+      <DeletePostButton callback={resetForm} />
     </>
   );
 };

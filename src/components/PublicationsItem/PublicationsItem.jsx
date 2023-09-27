@@ -49,7 +49,11 @@ export const PublicationsItem = ({
 
         <TouchableOpacity
           style={locationDetails}
-          onPress={() => navigation.navigate("MapScreen")}
+          onPress={() =>
+            navigation.navigate("MapScreen", {
+              postCoords,
+            })
+          }
         >
           <SvgXml xml={locationIcon} />
 

@@ -1,10 +1,18 @@
 import { db } from "../../config";
-import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 
-export const getAllPublicationsDB = async (authorUID) => {
+export const getAllPublicationsDB = async (userName) => {
   try {
-    console.log("authorUID: ", authorUID);
-    const docRef = collection(db, "users", `${authorUID}`, "publications");
+    const docRef = collection(db, "users", `${userName}`, "publications");
     const querySnapshot = await getDocs(docRef);
 
     const data = [];
@@ -21,21 +29,16 @@ export const getAllPublicationsDB = async (authorUID) => {
 };
 
 export const addPublicationDB = async ({
-  authorUID,
+  authorName,
   photoURL,
   photoName,
   location,
   coords,
 }) => {
   try {
-    const docRef = doc(
-      db,
-      "users",
-      `${authorUID}`,
-      "publications",
-      `${photoName}`
-    );
+    const docRef = collection(db, "users", `${authorName}`, "publications");
     const publicationData = {
+      postId: null,
       postName: photoName,
       postImage: photoURL,
       postLocation: location,
@@ -44,10 +47,45 @@ export const addPublicationDB = async ({
       comments: [],
     };
 
-    await setDoc(docRef, publicationData);
+    const { id } = await addDoc(docRef, publicationData);
+    await updateDoc(
+      doc(db, "users", `${authorName}`, "publications", `${id}`),
+      {
+        postId: id,
+      }
+    );
 
-    return publicationData;
+    return { ...publicationData, postId: id };
   } catch (error) {
     console.log(error.code);
+  }
+};
+
+export const addUserDB = async ({ authorName, authorUID, authorPhoto }) => {
+  try {
+    const docRef = doc(db, "users", `${authorName}`);
+    const userData = {
+      authorName,
+      authorUID,
+      authorPhoto,
+    };
+
+    await setDoc(docRef, userData);
+  } catch (error) {
+    console.log(error.code);
+  }
+};
+
+export const checkNewUserNameDB = async (newUserName) => {
+  try {
+    const q = query(
+      collection(db, "users"),
+      where("authorName", "==", `${newUserName}`)
+    );
+
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.length === 1;
+  } catch (error) {
+    console.log(error);
   }
 };

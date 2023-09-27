@@ -4,23 +4,24 @@ import { publications } from "./PublicationsStyles";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPublications } from "~redux/publications/selectors";
 import { fetchPublications } from "~redux/publications/operations";
-import { selectToken } from "~redux/auth/selectors";
+import { selectUser } from "~redux/auth/selectors";
 import { useEffect } from "react";
 
 export const Publications = ({ profile = false }) => {
   const publicationsData = useSelector(selectPublications);
-  const token = useSelector(selectToken);
+  const { name } = useSelector(selectUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchPublications(token));
-  }, [token]);
+    dispatch(fetchPublications(name));
+  }, [name]);
 
   return (
     <FlatList
       data={publicationsData}
       renderItem={({
         item: {
+          postId,
           comments,
           likes,
           postCoords,
@@ -32,6 +33,7 @@ export const Publications = ({ profile = false }) => {
         return (
           <PublicationsItem
             profile={profile}
+            postId={postId}
             comments={comments}
             likes={likes}
             postCoords={postCoords}
@@ -41,7 +43,9 @@ export const Publications = ({ profile = false }) => {
           />
         );
       }}
-      keyExtractor={(post) => post.postName}
+      keyExtractor={(post) => {
+        return post.postId;
+      }}
       style={publications}
     />
   );
