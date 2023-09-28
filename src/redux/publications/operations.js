@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { addPublicationDB, getAllPublicationsDB } from "~firebace/firestore";
+import { addPublicationDB, getAllPublicationsDB } from "~firebace/firedatabase";
 
 export const fetchPublications = createAsyncThunk(
   "publications/fetchAllPublications",

@@ -9,6 +9,7 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
+import { addImageDB } from "./firestorage";
 
 export const getAllPublicationsDB = async (userName) => {
   try {
@@ -40,7 +41,7 @@ export const addPublicationDB = async ({
     const publicationData = {
       postId: null,
       postName: photoName,
-      postImage: photoURL,
+      postImage: null,
       postLocation: location,
       postCoords: coords,
       likes: 0,
@@ -48,14 +49,17 @@ export const addPublicationDB = async ({
     };
 
     const { id } = await addDoc(docRef, publicationData);
+    const imagePath = await addImageDB(photoURL, id);
+
     await updateDoc(
       doc(db, "users", `${authorName}`, "publications", `${id}`),
       {
         postId: id,
+        postImage: imagePath,
       }
     );
 
-    return { ...publicationData, postId: id };
+    return { ...publicationData, postId: id, postImage: imagePath };
   } catch (error) {
     console.log(error.code);
   }

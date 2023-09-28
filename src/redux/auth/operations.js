@@ -6,7 +6,7 @@ import {
   registerDB,
   updateUserProfile,
 } from "~firebace/auth";
-import { addUserDB, checkNewUserNameDB } from "~firebace/firestore";
+import { addUserDB, checkNewUserNameDB } from "~firebace/firedatabase";
 
 export const register = createAsyncThunk(
   "auth/register",
