@@ -25,7 +25,7 @@ export const getAllPublicationsDB = async (userName) => {
       throw new Error("This files don't exist!");
     }
   } catch (error) {
-    console.log(error.code);
+    return error.code;
   }
 };
 
@@ -61,7 +61,7 @@ export const addPublicationDB = async ({
 
     return { ...publicationData, postId: id, postImage: imagePath };
   } catch (error) {
-    console.log(error.code);
+    return error.code;
   }
 };
 
@@ -76,7 +76,7 @@ export const addUserDB = async ({ authorName, authorUID, authorPhoto }) => {
 
     await setDoc(docRef, userData);
   } catch (error) {
-    console.log(error.code);
+    return error.code;
   }
 };
 
@@ -90,6 +90,6 @@ export const checkNewUserNameDB = async (newUserName) => {
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.length === 1;
   } catch (error) {
-    console.log(error);
+    return error.code;
   }
 };
