@@ -7,6 +7,7 @@ import {
   updateUserProfile,
 } from "~firebace/auth";
 import { addUserDB, checkNewUserNameDB } from "~firebace/firedatabase";
+import { addImageDB } from "~firebace/firestorage";
 
 export const register = createAsyncThunk(
   "auth/register",
@@ -19,14 +20,18 @@ export const register = createAsyncThunk(
       if (registerResult === "auth/email-already-in-use")
         throw new Error("This email has alredy been used!");
 
+      const userId = registerResult.user.uid;
+
+      const photoURL = await addImageDB(userPhotoURL, userId);
+
       await updateUserProfile({
         displayName: login,
-        photoURL: userPhotoURL,
+        photoURL: photoURL,
       });
       await addUserDB({
         authorName: login,
-        authorUID: registerResult.user.uid,
-        authorPhoto: userPhotoURL,
+        authorUID: userId,
+        authorPhoto: photoURL,
       });
 
       return registerResult.user;

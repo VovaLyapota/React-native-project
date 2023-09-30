@@ -8,12 +8,17 @@ import {
   userPhotoStyles,
 } from "./UserPhotoPlaceholderStyles.js";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { selectUser } from "~redux/auth/selectors.js";
+import { useDispatch, useSelector } from "react-redux";
+import { selectToken, selectUser } from "~redux/auth/selectors.js";
+import { updateUser } from "~redux/auth/operations.js";
+import { addImageDB } from "~firebace/firestorage.js";
 
 export const UserPhotoPlaceholder = ({ onPhotoChange }) => {
   const { userPhoto } = useSelector(selectUser);
+  const token = useSelector(selectToken);
   const [image, setImage] = useState(userPhoto);
+
+  const dispatch = useDispatch();
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -24,8 +29,20 @@ export const UserPhotoPlaceholder = ({ onPhotoChange }) => {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
-      onPhotoChange(result.assets[0].uri);
+      const resultURI = result.assets[0].uri;
+
+      if (token) {
+        const userPhotoURI = await addImageDB(resultURI, token);
+        dispatch(
+          updateUser({
+            photoURL: userPhotoURI,
+          })
+        );
+        return;
+      }
+
+      setImage(resultURI);
+      onPhotoChange(resultURI);
     }
   };
 
