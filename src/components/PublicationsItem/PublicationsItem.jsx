@@ -18,8 +18,10 @@ import {
 
 export const PublicationsItem = ({
   profile,
-  comments,
+  authorName,
+  postId,
   likes,
+  comments,
   postCoords,
   postImage,
   postLocation,
@@ -34,10 +36,17 @@ export const PublicationsItem = ({
       <View style={publicationInfo}>
         <TouchableOpacity
           style={publicationDetails}
-          onPress={() => navigation.navigate("PostComments")}
+          onPress={() =>
+            navigation.navigate("PostComments", {
+              authorName,
+              postId,
+              postImage,
+              comments,
+            })
+          }
         >
           <SvgXml xml={profile ? profileComentIcon : comentIcon} />
-          <Text style={comentsValue}>{comments.length}</Text>
+          <Text style={comentsValue}>{comments?.length || 0}</Text>
         </TouchableOpacity>
 
         {profile && (

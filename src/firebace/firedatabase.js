@@ -1,8 +1,10 @@
 import { db } from "../../config";
 import {
   addDoc,
+  arrayUnion,
   collection,
   doc,
+  getDoc,
   getDocs,
   query,
   setDoc,
@@ -10,6 +12,7 @@ import {
   where,
 } from "firebase/firestore";
 import { addImageDB } from "./firestorage";
+import moment from "moment/moment";
 
 export const getAllPublicationsDB = async (userName) => {
   try {
@@ -17,7 +20,9 @@ export const getAllPublicationsDB = async (userName) => {
     const querySnapshot = await getDocs(docRef);
 
     const data = [];
-    querySnapshot.forEach((doc) => data.push(doc.data()));
+    querySnapshot.forEach((doc) => {
+      data.push(doc.data());
+    });
 
     if (data) {
       return data;
@@ -39,13 +44,11 @@ export const addPublicationDB = async ({
   try {
     const docRef = collection(db, "users", `${authorName}`, "publications");
     const publicationData = {
-      postId: null,
+      authorName,
       postName: photoName,
-      postImage: null,
       postLocation: location,
       postCoords: coords,
       likes: 0,
-      comments: [],
     };
 
     const { id } = await addDoc(docRef, publicationData);
@@ -56,6 +59,7 @@ export const addPublicationDB = async ({
       {
         postId: id,
         postImage: imagePath,
+        comments: [],
       }
     );
 
@@ -77,6 +81,51 @@ export const addUserDB = async ({ authorName, authorUID, authorPhoto }) => {
     await setDoc(docRef, userData);
   } catch (error) {
     return error.code;
+  }
+};
+
+export const getPublicationCommentsDB = async (authorName, publicationId) => {
+  try {
+    const docRef = doc(
+      db,
+      "users",
+      `${authorName}`,
+      "publications",
+      `${publicationId}`
+    );
+    const querySnapshot = await getDoc(docRef);
+
+    return querySnapshot.data().comments;
+  } catch (error) {
+    return error.code;
+  }
+};
+
+export const addPublicationCommentDB = async (
+  publicationId,
+  authorName,
+  comentatorName,
+  comentatorPhoto,
+  message
+) => {
+  try {
+    const time = moment().format("LLL", "uk");
+    const comment = { comentatorName, comentatorPhoto, message, time };
+
+    const docRef = doc(
+      db,
+      "users",
+      `${authorName}`,
+      "publications",
+      `${publicationId}`
+    );
+    await updateDoc(docRef, {
+      comments: arrayUnion(comment),
+    });
+
+    return comment;
+  } catch (error) {
+    console.log(error);
   }
 };
 

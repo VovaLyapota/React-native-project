@@ -7,12 +7,15 @@ import {
   commentInputContiner,
   commentSubmitButton,
 } from "./CommentInputStyles";
+import { useSelector } from "react-redux";
+import { selectUser } from "~redux/auth/selectors";
 
-export const CommentInput = () => {
+export const CommentInput = ({ sendComment }) => {
+  const { name, userPhoto } = useSelector(selectUser);
   const [comment, setComment] = useState("");
 
   const handleSubmit = () => {
-    console.log(comment);
+    sendComment(name, userPhoto, comment);
     setComment("");
   };
 

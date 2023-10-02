@@ -9,11 +9,17 @@ import {
   messageCommentContainer,
   messageCommentContainerFlex,
 } from "./PublicationCommentItemStyles";
-const userImg = require("~images/userPhoto.jpg");
-const fakeComentatorImg = require("~images/fakeComentator.jpg");
+import { selectUser } from "~redux/auth/selectors";
+import { useSelector } from "react-redux";
 
-export const PublicationCommentItem = ({ userId, message, time }) => {
-  const isUserMessage = userId === 2;
+export const PublicationCommentItem = ({
+  comentatorName,
+  comentatorPhoto,
+  message,
+  time,
+}) => {
+  const { name } = useSelector(selectUser);
+  const isUserMessage = name === comentatorName;
 
   return (
     <View
@@ -23,7 +29,7 @@ export const PublicationCommentItem = ({ userId, message, time }) => {
       ]}
     >
       {!isUserMessage && (
-        <Image source={fakeComentatorImg} style={commentatorPhoto} />
+        <Image source={{ uri: comentatorPhoto }} style={commentatorPhoto} />
       )}
       <View style={[commentContainer, isUserMessage && commentUserContainer]}>
         <Text style={commentText}>{message}</Text>
@@ -31,7 +37,9 @@ export const PublicationCommentItem = ({ userId, message, time }) => {
           {time}
         </Text>
       </View>
-      {isUserMessage && <Image source={userImg} style={commentatorPhoto} />}
+      {isUserMessage && (
+        <Image source={{ uri: comentatorPhoto }} style={commentatorPhoto} />
+      )}
     </View>
   );
 };

@@ -21,9 +21,10 @@ export const Publications = ({ profile = false }) => {
       data={publicationsData}
       renderItem={({
         item: {
+          authorName,
           postId,
-          comments,
           likes,
+          comments,
           postCoords,
           postImage,
           postLocation,
@@ -33,6 +34,7 @@ export const Publications = ({ profile = false }) => {
         return (
           <PublicationsItem
             profile={profile}
+            authorName={authorName}
             postId={postId}
             comments={comments}
             likes={likes}

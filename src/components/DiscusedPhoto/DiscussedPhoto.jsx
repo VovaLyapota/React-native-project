@@ -3,12 +3,11 @@ import {
   discussedPhoto,
   discussedPhotoContainer,
 } from "./DiscussedPhotoStyles";
-const postImg = require("~images/fakePublicationPhoto.jpg");
 
-export const DiscussedPhoto = () => {
+export const DiscussedPhoto = ({ imageURI }) => {
   return (
     <View style={discussedPhotoContainer}>
-      <Image source={postImg} style={discussedPhoto} />
+      <Image source={{ uri: imageURI }} style={discussedPhoto} />
     </View>
   );
 };
