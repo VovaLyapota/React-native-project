@@ -22,6 +22,7 @@ import {
   submitTextActive,
   submitTextDisabled,
   cameraStyles,
+  changePhotoButton,
 } from "./CreatePostStyled";
 import { DeletePostButton } from "~components/DeletePostButton/DeletePostButton";
 import { KeyboardContainer } from "~components/KeyboardContainer/KeyboardContainer";
@@ -43,7 +44,7 @@ export const CreatePost = () => {
 
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [type] = useState(Camera.Constants.Type.back);
 
   useEffect(() => {
     (async () => {
@@ -126,7 +127,7 @@ export const CreatePost = () => {
             </View>
 
             <TouchableOpacity
-              style={{ marginBottom: 32 }}
+              style={changePhotoButton}
               onPress={() => setPhotoSource(null)}
             >
               <Text style={addPhotoTextButton}>

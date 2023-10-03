@@ -1,7 +1,7 @@
 export const deletePostButton = {
   position: "absolute",
   left: "50%",
-  bottom: 34,
+  bottom: 24,
   transform: [{ translateX: -35 }, { translateY: -35 }],
 
   justifyContent: "center",

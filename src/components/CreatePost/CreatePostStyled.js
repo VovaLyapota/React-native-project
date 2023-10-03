@@ -43,6 +43,8 @@ export const addPhotoButton = {
   borderRadius: 30,
 };
 
+export const changePhotoButton = { marginBottom: 32, maxWidth: "38%" };
+
 export const addPhotoTextButton = {
   color: "#BDBDBD",
   fontFamily: "Roboto",
