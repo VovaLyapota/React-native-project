@@ -15,6 +15,8 @@ import {
   publicationInfo,
   publicationName,
 } from "./PublicationsItemStyles";
+import { useState } from "react";
+import { sendLikeToPublicationDB } from "~firebace/firedatabase";
 
 export const PublicationsItem = ({
   profile,
@@ -27,7 +29,13 @@ export const PublicationsItem = ({
   postLocation,
   postName,
 }) => {
+  const [likesValue, setLikesValue] = useState(likes);
   const navigation = useNavigation();
+
+  const sendLike = async () => {
+    await sendLikeToPublicationDB(postId, authorName);
+    setLikesValue((prevValue) => prevValue + 1);
+  };
 
   return (
     <View style={publicationContainer}>
@@ -50,10 +58,10 @@ export const PublicationsItem = ({
         </TouchableOpacity>
 
         {profile && (
-          <View style={publicationDetails}>
+          <TouchableOpacity onPress={sendLike} style={publicationDetails}>
             <SvgXml xml={likeIcon} />
-            <Text style={comentsValue}>{likes}</Text>
-          </View>
+            <Text style={comentsValue}>{likesValue}</Text>
+          </TouchableOpacity>
         )}
 
         <TouchableOpacity

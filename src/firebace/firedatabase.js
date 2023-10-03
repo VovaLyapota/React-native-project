@@ -6,6 +6,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  increment,
   query,
   setDoc,
   updateDoc,
@@ -13,6 +14,35 @@ import {
 } from "firebase/firestore";
 import { addImageDB } from "./firestorage";
 import moment from "moment/moment";
+
+export const addUserDB = async ({ authorName, authorUID, authorPhoto }) => {
+  try {
+    const docRef = doc(db, "users", `${authorName}`);
+    const userData = {
+      authorName,
+      authorUID,
+      authorPhoto,
+    };
+
+    await setDoc(docRef, userData);
+  } catch (error) {
+    return error.code;
+  }
+};
+
+export const checkNewUserNameDB = async (newUserName) => {
+  try {
+    const q = query(
+      collection(db, "users"),
+      where("authorName", "==", `${newUserName}`)
+    );
+
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.length === 1;
+  } catch (error) {
+    return error.code;
+  }
+};
 
 export const getAllPublicationsDB = async (userName) => {
   try {
@@ -69,21 +99,6 @@ export const addPublicationDB = async ({
   }
 };
 
-export const addUserDB = async ({ authorName, authorUID, authorPhoto }) => {
-  try {
-    const docRef = doc(db, "users", `${authorName}`);
-    const userData = {
-      authorName,
-      authorUID,
-      authorPhoto,
-    };
-
-    await setDoc(docRef, userData);
-  } catch (error) {
-    return error.code;
-  }
-};
-
 export const getPublicationCommentsDB = async (authorName, publicationId) => {
   try {
     const docRef = doc(
@@ -129,16 +144,19 @@ export const addPublicationCommentDB = async (
   }
 };
 
-export const checkNewUserNameDB = async (newUserName) => {
+export const sendLikeToPublicationDB = async (publicationId, authorName) => {
   try {
-    const q = query(
-      collection(db, "users"),
-      where("authorName", "==", `${newUserName}`)
+    const docRef = doc(
+      db,
+      "users",
+      `${authorName}`,
+      "publications",
+      `${publicationId}`
     );
-
-    const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.length === 1;
+    await updateDoc(docRef, {
+      likes: increment(1),
+    });
   } catch (error) {
-    return error.code;
+    console.log(error);
   }
 };
