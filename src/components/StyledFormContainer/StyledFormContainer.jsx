@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
-import { BackgroundContainer } from "~components/BackgroundContainer/BackgroundContainer";
-import { KeyboardContainer } from "~components/KeyboardContainer/KeyboardContainer";
+import { BackgroundContainer } from "~components/BackgroundContainer";
+import { KeyboardContainer } from "~components/KeyboardContainer";
 
 export const StyledFormContainer = ({
   whiteBoxHeigth,

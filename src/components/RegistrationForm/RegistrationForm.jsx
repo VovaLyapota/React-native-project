@@ -28,6 +28,9 @@ export const RegistrationForm = ({ userPhotoURL }) => {
   const dispatch = useDispatch();
 
   const handleSubmit = () => {
+    if (login === "" || email === "" || password === "")
+      return toast("Fill in all the fields!", 2500);
+
     setIsSubmitting(true);
 
     dispatch(register({ login, userPhotoURL, email, password }))

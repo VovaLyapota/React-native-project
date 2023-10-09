@@ -27,6 +27,9 @@ export const LogInForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = () => {
+    if (email === "" || password === "")
+      return toast("Fill in all the fields!", 2500);
+
     setIsSubmitting(true);
 
     dispatch(logIn({ email, password }))

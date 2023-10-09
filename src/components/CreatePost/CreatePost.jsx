@@ -24,8 +24,8 @@ import {
   cameraStyles,
   changePhotoButton,
 } from "./CreatePostStyled";
-import { DeletePostButton } from "~components/DeletePostButton/DeletePostButton";
-import { KeyboardContainer } from "~components/KeyboardContainer/KeyboardContainer";
+import { DeletePostButton } from "~components/DeletePostButton";
+import { KeyboardContainer } from "~components/KeyboardContainer";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "~redux/auth/selectors";
 import { addPublication } from "~redux/publications/operations";

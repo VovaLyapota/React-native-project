@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux";
-import { BackgroundContainer } from "~components/BackgroundContainer/BackgroundContainer";
-import { LogOutButton } from "~components/LogOutButton/LogOutButton";
-import { ProfileUserName } from "~components/ProfileUserName/ProfileUserName";
-import { Publications } from "~components/Publications/Publications";
-import { UserPhotoPlaceholder } from "~components/UserPhotoPlaceholder/UserPhotoPlaceholder";
+import { BackgroundContainer } from "~components/BackgroundContainer";
+import { LogOutButton } from "~components/LogOutButton";
+import { ProfileUserName } from "~components/ProfileUserName";
+import { Publications } from "~components/Publications";
+import { UserPhotoPlaceholder } from "~components/UserPhotoPlaceholder";
 import { updateUser } from "~redux/auth/operations";
 
 export const ProfileScreen = () => {

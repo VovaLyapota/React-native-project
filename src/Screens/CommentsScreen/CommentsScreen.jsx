@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { BasicContainer } from "~components/BasicContainer/BasicContainer";
-import { CommentInput } from "~components/CommentInput/CommentInput";
-import { DiscussedPhoto } from "~components/DiscusedPhoto/DiscussedPhoto";
-import { KeyboardContainer } from "~components/KeyboardContainer/KeyboardContainer";
-import { PublicationComments } from "~components/PublicationComments/PublicationComments";
+import { BasicContainer } from "~components/BasicContainer";
+import { CommentInput } from "~components/CommentInput";
+import { DiscussedPhoto } from "~components/DiscussedPhoto";
+import { KeyboardContainer } from "~components/KeyboardContainer";
+import { PublicationComments } from "~components/PublicationComments";
 import {
   addPublicationCommentDB,
   getPublicationCommentsDB,
