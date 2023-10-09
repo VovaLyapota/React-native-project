@@ -1,7 +1,7 @@
-import { StyledFormContainer } from "~components/StyledFormContainer/StyledFormContainer";
-import { FormHeader } from "~components/FormHeader/FormHeader";
-import { LogInForm } from "~components/LogInForm/LogInForm";
-import { SwitchFormButton } from "~components/SwitchFormButton/SwitchFormButton";
+import { StyledFormContainer } from "~components/StyledFormContainer";
+import { FormHeader } from "~components/FormHeader";
+import { LogInForm } from "~components/LogInForm";
+import { SwitchFormButton } from "~components/SwitchFormButton";
 
 export const LogInScreen = () => {
   return (

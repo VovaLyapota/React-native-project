@@ -1,11 +1,11 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { RegistrationScreen } from "~Screens/RegistrationScreen/RegistrationScreen";
-import { LogInScreen } from "~Screens/LogInScreen/LogInScreen";
-import { Home } from "~Screens/Home/Home";
-import { CommentsScreen } from "~Screens/CommentsScreen/CommentsScreen";
-import { GetBackButton } from "~components/GetBackButton/GetBackButton";
-import { MapScreen } from "~Screens/MapScreen/MapScreen";
+import { RegistrationScreen } from "~Screens/RegistrationScreen";
+import { LogInScreen } from "~Screens/LogInScreen";
+import { Home } from "~Screens/Home";
+import { CommentsScreen } from "~Screens/CommentsScreen";
+import { GetBackButton } from "~components/GetBackButton";
+import { MapScreen } from "~Screens/MapScreen";
 import { useSelector } from "react-redux";
 import { selectToken } from "~redux/auth/selectors";
 

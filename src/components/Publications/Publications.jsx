@@ -1,5 +1,5 @@
 import { FlatList } from "react-native";
-import { PublicationsItem } from "~components/PublicationsItem/PublicationsItem";
+import { PublicationsItem } from "~components/PublicationsItem";
 import { publications } from "./PublicationsStyles";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPublications } from "~redux/publications/selectors";

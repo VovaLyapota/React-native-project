@@ -1,6 +1,6 @@
-import { BasicContainer } from "~components/BasicContainer/BasicContainer";
-import { HomeUser } from "~components/HomeUser/HomeUser";
-import { Publications } from "~components/Publications/Publications";
+import { BasicContainer } from "~components/BasicContainer";
+import { HomeUser } from "~components/HomeUser";
+import { Publications } from "~components/Publications";
 
 export const PostsScreen = () => {
   return (

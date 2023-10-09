@@ -1,5 +1,5 @@
-import { BasicContainer } from "~components/BasicContainer/BasicContainer";
-import { CreatePost } from "~components/CreatePost/CreatePost";
+import { BasicContainer } from "~components/BasicContainer";
+import { CreatePost } from "~components/CreatePost";
 
 export const CreatePostsScreen = () => {
   return (

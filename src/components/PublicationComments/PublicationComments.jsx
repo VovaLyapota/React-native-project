@@ -1,5 +1,5 @@
 import { FlatList } from "react-native";
-import { PublicationCommentItem } from "~components/PublicationCommentItem/PublicationCommentItem";
+import { PublicationCommentItem } from "~components/PublicationCommentItem";
 import { publicationCommentsContainer } from "./PublicationCommentsStyles";
 
 export const PublicationComments = ({ comments }) => {

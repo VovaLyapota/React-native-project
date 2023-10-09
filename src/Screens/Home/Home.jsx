@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { CreatePostsScreen } from "~Screens/CreatePostsScreen/CreatePostsScreen";
-import { PostsScreen } from "~Screens/PostsScreen/PostsScreen";
-import { ProfileScreen } from "~Screens/ProfileScreen/ProfileScreen";
-import { GetBackButton } from "~components/GetBackButton/GetBackButton";
-import { LogOutButton } from "~components/LogOutButton/LogOutButton";
+import { CreatePostsScreen } from "~Screens/CreatePostsScreen";
+import { PostsScreen } from "~Screens/PostsScreen";
+import { ProfileScreen } from "~Screens/ProfileScreen";
+import { GetBackButton } from "~components/GetBackButton";
+import { LogOutButton } from "~components/LogOutButton";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
