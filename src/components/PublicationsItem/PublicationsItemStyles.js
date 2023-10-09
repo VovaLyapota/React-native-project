@@ -1,6 +1,10 @@
 export const publicationContainer = { gap: 8, marginBottom: 34 };
 
-export const publicationImage = { width: "100%", borderRadius: 16 };
+export const publicationImage = {
+  width: "100%",
+  minHeight: 240,
+  borderRadius: 16,
+};
 
 export const publicationName = { fontFamily: "RobotoMedium", fontSize: 16 };
 

@@ -17,6 +17,13 @@ export const addPhotoContiner = {
   borderRadius: 8,
 };
 
+export const cameraStyles = {
+  overflow: "hidden",
+  borderRadius: 8,
+  width: "100%",
+  height: "100%",
+};
+
 export const selectedPhoto = { width: "100%", height: "100%", borderRadius: 8 };
 
 export const addPhotoButton = {
@@ -35,6 +42,8 @@ export const addPhotoButton = {
   opacity: 0.7,
   borderRadius: 30,
 };
+
+export const changePhotoButton = { marginBottom: 32, maxWidth: "38%" };
 
 export const addPhotoTextButton = {
   color: "#BDBDBD",

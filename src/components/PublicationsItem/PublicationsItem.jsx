@@ -15,40 +15,66 @@ import {
   publicationInfo,
   publicationName,
 } from "./PublicationsItemStyles";
-const postImg = require("~images/fakePublicationPhoto.jpg");
+import { useState } from "react";
+import { sendLikeToPublicationDB } from "~firebace/firedatabase";
 
-export const PublicationsItem = ({ profile }) => {
+export const PublicationsItem = ({
+  profile,
+  authorName,
+  postId,
+  likes,
+  comments,
+  postCoords,
+  postImage,
+  postLocation,
+  postName,
+}) => {
+  const [likesValue, setLikesValue] = useState(likes);
   const navigation = useNavigation();
+
+  const sendLike = async () => {
+    await sendLikeToPublicationDB(postId, authorName);
+    setLikesValue((prevValue) => prevValue + 1);
+  };
 
   return (
     <View style={publicationContainer}>
-      <Image source={postImg} style={publicationImage} />
-      <Text style={publicationName}>Ліс</Text>
+      <Image source={{ uri: postImage }} style={publicationImage} />
+      <Text style={publicationName}>{postName}</Text>
       <View style={publicationInfo}>
         <TouchableOpacity
           style={publicationDetails}
-          onPress={() => navigation.navigate("PostComments")}
+          onPress={() =>
+            navigation.navigate("PostComments", {
+              authorName,
+              postId,
+              postImage,
+              comments,
+            })
+          }
         >
           <SvgXml xml={profile ? profileComentIcon : comentIcon} />
-          <Text style={comentsValue}>0</Text>
+          <Text style={comentsValue}>{comments?.length || 0}</Text>
         </TouchableOpacity>
 
         {profile && (
-          <View style={publicationDetails}>
+          <TouchableOpacity onPress={sendLike} style={publicationDetails}>
             <SvgXml xml={likeIcon} />
-            <Text style={comentsValue}>153</Text>
-          </View>
+            <Text style={comentsValue}>{likesValue}</Text>
+          </TouchableOpacity>
         )}
 
         <TouchableOpacity
           style={locationDetails}
-          onPress={() => navigation.navigate("MapScreen")}
+          onPress={() =>
+            navigation.navigate("MapScreen", {
+              postCoords,
+            })
+          }
         >
           <SvgXml xml={locationIcon} />
 
-          <Text style={location}>
-            {!profile && "Ivano-Frankivs'k Region, "}Ukraine
-          </Text>
+          <Text style={location}>{postLocation}</Text>
         </TouchableOpacity>
       </View>
     </View>

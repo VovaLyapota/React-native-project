@@ -8,7 +8,7 @@ export const commentInputContiner = {
 export const commentInput = {
   paddingVertical: 16,
   paddingLeft: 16,
-  paddingRight: 42,
+  paddingRight: 48,
 
   width: "100%",
   height: 50,

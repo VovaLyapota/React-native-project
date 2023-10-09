@@ -1,6 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { register } from "~redux/auth/operations";
 import {
   formContainer,
   formInput,
@@ -9,28 +11,42 @@ import {
   passwordButtonText,
   passwordContainer,
   submitFormButton,
+  submitFormButtonDisabled,
   submitFormButtonText,
 } from "~components/LogInForm/FormStyles";
+import { toast } from "~utils/toast";
 
-export const RegistrationForm = () => {
+export const RegistrationForm = ({ userPhotoURL }) => {
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [focusedInput, setFocusedInput] = useState(null);
   const [shouldHidePassword, setShouldHidePassword] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const handleSubmit = () => {
-    console.log("Login: ", login);
-    console.log("Email: ", email);
-    console.log("Password: ", password);
+    setIsSubmitting(true);
 
+    dispatch(register({ login, userPhotoURL, email, password }))
+      .then((response) => {
+        if (typeof response.payload === "string") {
+          toast(response.payload, 2500);
+          return;
+        }
+        resetForm();
+
+        navigation.navigate("Home");
+      })
+      .finally(() => setIsSubmitting(false));
+  };
+
+  const resetForm = () => {
     setLogin("");
     setEmail("");
     setPassword("");
-
-    navigation.navigate("Home");
   };
 
   return (
@@ -75,7 +91,10 @@ export const RegistrationForm = () => {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity onPress={handleSubmit} style={submitFormButton}>
+      <TouchableOpacity
+        onPress={handleSubmit}
+        style={[submitFormButton, isSubmitting && submitFormButtonDisabled]}
+      >
         <Text style={submitFormButtonText}>Зареєструватись</Text>
       </TouchableOpacity>
     </View>

@@ -1,7 +1,10 @@
 import { Text } from "react-native";
-import fakeUser from "~fakeUser.json";
 import { profileUserName } from "./ProfileUserNameStyles";
+import { useSelector } from "react-redux";
+import { selectUser } from "~redux/auth/selectors";
 
 export const ProfileUserName = () => {
-  return <Text style={profileUserName}>{fakeUser.login}</Text>;
+  const { name } = useSelector(selectUser);
+
+  return <Text style={profileUserName}>{name}</Text>;
 };

@@ -21,19 +21,30 @@ import {
   submitButtonDisabled,
   submitTextActive,
   submitTextDisabled,
+  cameraStyles,
+  changePhotoButton,
 } from "./CreatePostStyled";
 import { DeletePostButton } from "~components/DeletePostButton/DeletePostButton";
 import { KeyboardContainer } from "~components/KeyboardContainer/KeyboardContainer";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "~redux/auth/selectors";
+import { addPublication } from "~redux/publications/operations";
+import { useNavigation } from "@react-navigation/native";
 
 export const CreatePost = () => {
+  const { name } = useSelector(selectUser);
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
   const [photoSource, setPhotoSource] = useState(null);
-  const [name, setName] = useState("");
+  const [postName, setPostName] = useState("");
   const [location, setLocation] = useState("");
   const [focusedInput, setFocusedInput] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [type] = useState(Camera.Constants.Type.back);
 
   useEffect(() => {
     (async () => {
@@ -46,14 +57,37 @@ export const CreatePost = () => {
   }, []);
 
   const handleSubmit = async () => {
-    let currentLocation = await Location.getCurrentPositionAsync({});
-    console.log(name);
-    console.log(currentLocation);
-    console.log(location);
+    try {
+      setIsSubmitting(true);
+      const { coords } = await Location.getCurrentPositionAsync({});
+
+      dispatch(
+        addPublication({
+          authorName: name,
+          photoURL: photoSource,
+          photoName: postName,
+          location,
+          coords,
+        })
+      );
+
+      resetForm();
+      navigation.goBack();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const resetForm = () => {
+    setPhotoSource(null);
+    setPostName("");
+    setLocation("");
   };
 
   const shouldLetSubmitForm =
-    name.length > 0 && location.length > 0 && photoSource;
+    postName.length > 0 && location.length > 0 && photoSource;
 
   if (hasPermission === null) {
     return <View />;
@@ -71,16 +105,7 @@ export const CreatePost = () => {
               {photoSource !== null ? (
                 <Image source={{ uri: photoSource }} style={selectedPhoto} />
               ) : (
-                <Camera
-                  style={{
-                    overflow: "hidden",
-                    borderRadius: 8,
-                    width: "100%",
-                    height: "100%",
-                  }}
-                  type={type}
-                  ref={setCameraRef}
-                >
+                <Camera style={cameraStyles} type={type} ref={setCameraRef}>
                   <TouchableOpacity
                     style={addPhotoButton}
                     onPress={async () => {
@@ -102,7 +127,7 @@ export const CreatePost = () => {
             </View>
 
             <TouchableOpacity
-              style={{ marginBottom: 32 }}
+              style={changePhotoButton}
               onPress={() => setPhotoSource(null)}
             >
               <Text style={addPhotoTextButton}>
@@ -115,13 +140,13 @@ export const CreatePost = () => {
             <TextInput
               style={[
                 publicationInput,
-                name.length > 0 && publicationInputWithText,
-                focusedInput === "name" && publicationInputFocused,
+                postName.length > 0 && publicationInputWithText,
+                focusedInput === "postName" && publicationInputFocused,
               ]}
-              onFocus={() => setFocusedInput("name")}
+              onFocus={() => setFocusedInput("postName")}
               onBlur={() => setFocusedInput(null)}
-              onChangeText={setName}
-              value={name}
+              onChangeText={setPostName}
+              value={postName}
               placeholder="Назва..."
             />
 
@@ -143,6 +168,7 @@ export const CreatePost = () => {
               style={[
                 submitButtonDisabled,
                 shouldLetSubmitForm && submitButtonActive,
+                isSubmitting && submitButtonDisabled,
               ]}
               onPress={handleSubmit}
             >
@@ -150,6 +176,7 @@ export const CreatePost = () => {
                 style={[
                   submitTextDisabled,
                   shouldLetSubmitForm && submitTextActive,
+                  isSubmitting && submitTextDisabled,
                 ]}
               >
                 Опубліковати
@@ -158,7 +185,7 @@ export const CreatePost = () => {
           </View>
         </View>
       </KeyboardContainer>
-      <DeletePostButton callback={() => setPhotoSource(null)} />
+      <DeletePostButton callback={resetForm} />
     </>
   );
 };
